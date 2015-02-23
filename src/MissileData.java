@@ -58,8 +58,8 @@ public class MissileData implements IMissileData {
 
     @Override
     public void updateObserver(Object obj) {
-        if (obj instanceof IShip) {
-            IShip ship = (IShip) obj;
+        if (obj instanceof AbstractShip) {
+            AbstractShip ship = (AbstractShip) obj;
             MissileStartX = ship.GetMissileStartX();
             MissileStartY = ship.GetMissileStartY();
             MissileTrajectory = ship.GetMissileTrajectory();

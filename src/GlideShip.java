@@ -2,11 +2,10 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class GlideShip extends Polygon implements IGameFigure, IShip {
+public class GlideShip extends AbstractShip implements IGameFigure {
 
     private final int ROTATION = 15;
     private int SHIPSPEED = 0;

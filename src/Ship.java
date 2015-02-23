@@ -2,22 +2,20 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Ship extends Polygon implements IGameFigure, IShip {
+public class Ship extends AbstractShip {
 
-    private final int ROTATION = 15;
-    private final int SHIPSPEED = 10;
 
+    
+    
     private final int NOSECONE = 45;
     private final int SHIPLENGTH = 10;
     private final int NOSEOFFSET = 15;
 
     private final Color SHIPCOLOR;
 
-    private int theta;
     private final Point nose, left, right;
 
     private final ArrayList<IObserver> observers;
@@ -28,12 +26,10 @@ public class Ship extends Polygon implements IGameFigure, IShip {
     private double MissileStartX;
     private double MissileStartY;
     private int MissileTrajectory;
-
+    
     public Ship(ISharedData sharedData) {
         this.observers = new ArrayList<>();
         this.sharedData = sharedData;
-
-        theta = 0;
 
         SHIPCOLOR = new Color(0xffa500);
         nose = new Point(this.sharedData.getGameWidth() / 2,
@@ -41,6 +37,10 @@ public class Ship extends Polygon implements IGameFigure, IShip {
         left = new Point(nose.x, nose.y);
         right = new Point(nose.x, nose.y);
 
+        sb = new GlideShipBehavior();
+        //sb = new NormalShipBehavior();
+        mv = sb.getDefaultVector();
+        
         setShipPoints();
 
     }
@@ -64,56 +64,63 @@ public class Ship extends Polygon implements IGameFigure, IShip {
 
         left.setLocation(
                 nose.x
-                + (Math.cos(Math.toRadians(theta)
+                + (Math.cos(Math.toRadians(mv.facing)
                         + Math.toRadians(NOSECONE)) * SHIPLENGTH),
                 nose.y
-                + (Math.sin(Math.toRadians(theta)
+                + (Math.sin(Math.toRadians(mv.facing)
                         + Math.toRadians(NOSECONE)) * SHIPLENGTH));
         right.setLocation(
                 nose.x
-                + (Math.cos(Math.toRadians(theta)
+                + (Math.cos(Math.toRadians(mv.facing)
                         - Math.toRadians(NOSECONE)) * SHIPLENGTH),
                 nose.y
-                + (Math.sin(Math.toRadians(theta)
+                + (Math.sin(Math.toRadians(mv.facing)
                         - Math.toRadians(NOSECONE)) * SHIPLENGTH));
 
         this.npoints = 3;
 
         this.xpoints = new int[]{
-            (int) Math.round(nose.x - Math.cos(Math.toRadians(theta))
+            (int) Math.round(nose.x - Math.cos(Math.toRadians(mv.facing))
             * NOSEOFFSET), left.x, right.x};
 
         this.ypoints = new int[]{
-            (int) Math.round(nose.y - Math.sin(Math.toRadians(theta))
+            (int) Math.round(nose.y - Math.sin(Math.toRadians(mv.facing))
             * NOSEOFFSET), left.y, right.y};
     }
 
     private void fireMissile() {
 
-        MissileStartX = Math.cos(Math.toRadians(theta));
-        MissileStartY = Math.sin(Math.toRadians(theta));
-        MissileStartX *= (NOSEOFFSET + 2 * SHIPSPEED);
-        MissileStartY *= (NOSEOFFSET + 2 * SHIPSPEED);
+        MissileStartX = Math.cos(Math.toRadians(mv.facing));
+        MissileStartY = Math.sin(Math.toRadians(mv.facing));
+        MissileStartX *= (NOSEOFFSET + 2 * 10);
+        MissileStartY *= (NOSEOFFSET + 2 * 10);
         MissileStartX = nose.x - MissileStartX;
         MissileStartY = nose.y - MissileStartY;
-        MissileTrajectory = theta;
+        MissileTrajectory = mv.facing;
 
         NotifyObservers();
     }
 
     private void rotateRight() {
-        theta = (theta + ROTATION) % 360;
+        mv = sb.rotateRight(mv);
         setShipPoints();
     }
 
     private void rotateLeft() {
-        theta = ((360 + theta) - ROTATION) % 360;
+        mv = sb.rotateLeft(mv);
         setShipPoints();
     }
 
-    private void thrust(int distance) {
-        nose.setLocation(nose.x - (Math.cos(Math.toRadians(theta)) * distance),
-                nose.y - (Math.sin(Math.toRadians(theta)) * distance));
+    private void thrust() {
+        mv = sb.thrust(mv);
+        nose.setLocation(nose.x - (Math.cos(Math.toRadians(mv.direction)) * mv.speed),
+                nose.y - (Math.sin(Math.toRadians(mv.direction)) * mv.speed));
+        setShipPoints();
+    }
+    private void slow() {
+        mv = sb.slow(mv);
+        nose.setLocation(nose.x - (Math.cos(Math.toRadians(mv.direction)) * mv.speed),
+                nose.y - (Math.sin(Math.toRadians(mv.direction)) * mv.speed));
         setShipPoints();
     }
 
@@ -128,8 +135,12 @@ public class Ship extends Polygon implements IGameFigure, IShip {
             rotateLeft();
         }
         if (this.sharedData.GetPressedKeys().contains(KeyEvent.VK_NUMPAD5)) {
-            thrust(SHIPSPEED);
+            thrust();
         }
+        else{
+            slow();
+        }
+        
         if (this.sharedData.GetPressedKeys().contains(KeyEvent.VK_NUMPAD6)) {
             rotateRight();
         }
