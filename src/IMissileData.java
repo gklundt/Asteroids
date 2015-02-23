@@ -9,7 +9,7 @@ public interface IMissileData extends IObserver {
 
     double getMissileStartY();
 
-    int getMissileTrajectory();
+    double getMissileTrajectory();
 
     int getMissileSize();
     

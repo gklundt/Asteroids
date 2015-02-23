@@ -1,5 +1,5 @@
 public class MovementVector {
-    public int speed;
-    public int direction;
-    public int facing;
+    public double speed;
+    public double direction;
+    public double facing;
 }

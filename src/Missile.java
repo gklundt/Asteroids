@@ -10,7 +10,7 @@ public final class Missile extends Ellipse2D.Double implements IGameFigure {
     private final ISharedData sharedData;
     private final IMissileData missileData;
     
-    private final int missileTrajectory;
+    private final double missileTrajectory;
     private final int missileSpeed;
     private boolean remove;
 

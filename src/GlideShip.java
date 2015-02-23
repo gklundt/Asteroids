@@ -56,7 +56,7 @@ public class GlideShip extends AbstractShip implements IGameFigure {
     }
 
     @Override
-    public int GetMissileTrajectory() {
+    public double GetMissileTrajectory() {
         return MissileTrajectory;
     }
 

@@ -11,5 +11,5 @@ public abstract class AbstractShip extends Polygon implements IGameFigure {
 
     public abstract double GetMissileStartY();
 
-    public abstract int GetMissileTrajectory();
+    public abstract double GetMissileTrajectory();
 }

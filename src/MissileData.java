@@ -8,7 +8,7 @@ public class MissileData implements IMissileData {
     private long MissileLaunchTime;
     private double MissileStartX;
     private double MissileStartY;
-    private int MissileTrajectory;
+    private double MissileTrajectory;
     private boolean MissileFired;
 
     public MissileData() {
@@ -32,7 +32,7 @@ public class MissileData implements IMissileData {
     }
 
     @Override
-    public int getMissileTrajectory() {
+    public double getMissileTrajectory() {
         return MissileTrajectory;
     }
 

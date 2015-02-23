@@ -25,7 +25,7 @@ public class Ship extends AbstractShip {
 
     private double MissileStartX;
     private double MissileStartY;
-    private int MissileTrajectory;
+    private double MissileTrajectory;
     
     public Ship(ISharedData sharedData) {
         this.observers = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Ship extends AbstractShip {
     }
 
     @Override
-    public int GetMissileTrajectory() {
+    public double GetMissileTrajectory() {
         return MissileTrajectory;
     }
 
@@ -97,6 +97,7 @@ public class Ship extends AbstractShip {
         MissileStartX = nose.x - MissileStartX;
         MissileStartY = nose.y - MissileStartY;
         MissileTrajectory = mv.facing;
+        
 
         NotifyObservers();
     }

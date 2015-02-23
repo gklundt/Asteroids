@@ -1,7 +1,7 @@
 public interface iShipBehavior {
 
     public static final int ROTATION = 15;
-    public static final int SHIPSPEED = 10;
+    public static final double SHIPSPEED = 15;
 
     MovementVector getDefaultVector();
     MovementVector rotateRight(MovementVector current);
