@@ -7,6 +7,7 @@ public class RandomAsteroidFactory implements IRandomAsteroidFactory {
     public static void createAsteroids(int Difficulty, ISharedData sharedData) {
 
         int asteroidCount = new Random().nextInt(Difficulty) + 5;
+        //asteroidCount = 0;
         for (int i = 0; i <= asteroidCount; ++i) {
 
             /* random starting location */

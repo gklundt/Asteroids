@@ -9,6 +9,7 @@ public final class SplashSharedData implements ISharedData {
     private final List<IGameFigure> gameFigures;
     private static int GAMEWIDTH;
     private static int GAMEHEIGHT;
+    private static int MOVEMENTTYPE;
 
     public SplashSharedData() {
         this.gameFigures = Collections
@@ -47,6 +48,11 @@ public final class SplashSharedData implements ISharedData {
     }
 
     @Override
+    public int getMovementType() {
+        return MOVEMENTTYPE;
+    }
+
+    @Override
     public void setGameWidth(int width) {
         GAMEWIDTH = width;
     }
@@ -55,7 +61,12 @@ public final class SplashSharedData implements ISharedData {
     public void setGameHeight(int height) {
         GAMEHEIGHT = height;
     }
-
+    
+@Override
+    public void setMovementType(int movementType) {
+        MOVEMENTTYPE = movementType;
+    }
+    
     @Override
     public void setGameOver(boolean isGameOver) {
         // not implemented

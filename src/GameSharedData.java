@@ -7,10 +7,12 @@ import java.util.Set;
 
 public final class GameSharedData implements ISharedData {
 
+    
     private final List<IGameFigure> gameFigures;
     private final Set<Integer> pressedKeys;
     private static int GAMEWIDTH;
     private static int GAMEHEIGHT;
+    private static int MOVEMENTTYPE;
 
     private boolean gameOver;
 
@@ -103,6 +105,16 @@ public final class GameSharedData implements ISharedData {
         GAMEHEIGHT = height;
     }
 
+    @Override
+    public int getMovementType() {
+        return MOVEMENTTYPE;
+    }
+
+    @Override
+    public void setMovementType(int movementType) {
+        MOVEMENTTYPE = movementType;
+    }
+    
     @Override
     public void setGameOver(boolean isGameOver) {
         this.gameOver = isGameOver;

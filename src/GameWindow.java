@@ -10,6 +10,7 @@ public class GameWindow extends AbstractGameWindow {
 
     private final JPanel buttonPanel;
     private final JButton startButton;
+    private final JButton startOptButton;
     private final JButton quitButton;
     private final JButton resetButton;
 
@@ -31,15 +32,18 @@ public class GameWindow extends AbstractGameWindow {
         c.setLayout(new BorderLayout());
 
         startButton = new JButton("Start Game");
+        startOptButton = new JButton("Start Newton Game");
         quitButton = new JButton("Quit");
         resetButton = new JButton("Reset");
 
         buttonPanel = new JPanel();
         buttonPanel.add(quitButton);
         buttonPanel.add(startButton);
+        buttonPanel.add(startOptButton);
         buttonPanel.add(resetButton);
 
         startButton.setFocusable(false);
+        startOptButton.setFocusable(false);
         quitButton.setFocusable(false);
         resetButton.setFocusable(false);
 
@@ -51,6 +55,7 @@ public class GameWindow extends AbstractGameWindow {
     @Override
     public void addListeners() {
         startButton.addActionListener(this);
+        startOptButton.addActionListener(this);
         quitButton.addActionListener(this);
         resetButton.addActionListener(this);
     }
@@ -63,11 +68,13 @@ public class GameWindow extends AbstractGameWindow {
         }
         if (e.getSource() == this.startButton) {
             resetGame();
-            startGame();
+            startGame(1);
+        } else if (e.getSource() == this.startOptButton) {
+            resetGame();
+            startGame(2);
         } else if (e.getSource() == this.resetButton) {
             resetGame();
             welcome();
-
         } else {
             quitGame();
         }
@@ -99,11 +106,12 @@ public class GameWindow extends AbstractGameWindow {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(int movementType) {
 
         Container c = this.getContentPane();
         this.sharedData = SharedDataFactory
                 .GetSharedData(ISharedDataFactory.ASTEROIDS);
+        this.sharedData.setMovementType(movementType);
         this.gamePanel = GameFactory.GetGamePanel(sharedData,
                 IGameFactory.ASTEROIDS);
         this.animator = AnimatorFactory.GetAnimator(sharedData, gamePanel,

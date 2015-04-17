@@ -14,11 +14,15 @@ public interface ISharedData {
 
     int getGameHeight();
 
+    int getMovementType();
+
     boolean getGameOver();
 
     void setGameWidth(int width);
 
     void setGameHeight(int height);
+
+    void setMovementType(int movementType);
 
     void setGameOver(boolean isGameOver);
 

@@ -37,8 +37,13 @@ public class Ship extends AbstractShip {
         left = new Point(nose.x, nose.y);
         right = new Point(nose.x, nose.y);
 
-        sb = new GlideShipBehavior();
-        //sb = new NormalShipBehavior();
+        if (this.sharedData.getMovementType() == 1) {
+            sb = new NormalShipBehavior();
+        }
+        else {
+            sb = new GlideShipBehavior();
+        }
+
         mv = sb.getDefaultVector();
         
         setShipPoints();
@@ -102,23 +107,28 @@ public class Ship extends AbstractShip {
         NotifyObservers();
     }
 
-    private void rotateRight() {
+    @Override
+    protected void rotateRight() {
         mv = sb.rotateRight(mv);
         setShipPoints();
     }
 
-    private void rotateLeft() {
+    @Override
+    protected void rotateLeft() {
         mv = sb.rotateLeft(mv);
         setShipPoints();
     }
 
-    private void thrust() {
+    @Override
+    protected void thrust() {
         mv = sb.thrust(mv);
         nose.setLocation(nose.x - (Math.cos(Math.toRadians(mv.direction)) * mv.speed),
                 nose.y - (Math.sin(Math.toRadians(mv.direction)) * mv.speed));
         setShipPoints();
     }
-    private void slow() {
+    
+    @Override
+    protected void slow() {
         mv = sb.slow(mv);
         nose.setLocation(nose.x - (Math.cos(Math.toRadians(mv.direction)) * mv.speed),
                 nose.y - (Math.sin(Math.toRadians(mv.direction)) * mv.speed));

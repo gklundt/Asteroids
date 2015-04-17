@@ -9,10 +9,6 @@ public class ShipFactory implements IShipFactory {
                 s.addToSharedData();
                 return s;
 
-            case GLIDESHIP:
-                s = new GlideShip(sharedData);
-                s.addToSharedData();
-                return s;
             default:
                 return null;
         }

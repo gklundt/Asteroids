@@ -15,11 +15,9 @@ public class GlideShipBehavior implements iShipBehavior {
 
     @Override
     public MovementVector thrust(MovementVector current) {
-        
-        
+                
         double x1 = (double) current.speed * Math.cos(Math.toRadians(current.direction));
         double y1 = (double) current.speed * Math.sin(Math.toRadians(current.direction));
-
         
         double x2 = 2 * Math.cos(Math.toRadians(current.facing));
         double y2 = 2 * Math.sin(Math.toRadians(current.facing));
